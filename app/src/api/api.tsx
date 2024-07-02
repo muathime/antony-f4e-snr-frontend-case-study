@@ -1,6 +1,4 @@
-import axios from 'axios';
-
 export const fetchStudents = async () => {
-  const response = await axios.get('/sampleStdentData.json');
-  return response.data;
+  const response = await fetch('/sampleStdentData.json');
+  return response;
 };

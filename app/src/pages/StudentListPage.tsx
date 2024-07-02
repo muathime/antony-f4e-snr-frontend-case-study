@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { Student } from '../types/students';
+import { fetchStudents } from '../api/api';
 
 const StudentListPage: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -11,7 +12,7 @@ const StudentListPage: React.FC = () => {
     useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/sampleStdentData.json'); // Fetch from public folder
+        const response = await fetchStudents()
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
