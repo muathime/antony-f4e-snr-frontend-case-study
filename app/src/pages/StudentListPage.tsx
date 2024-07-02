@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState } from 'react';
 import {
   FormControl,
@@ -33,6 +34,10 @@ const StudentListPage: React.FC = () => {
   const [genderFilter, setGenderFilter] = useState<string>('');
   const [ageFilter, setAgeFilter] = useState<string>(''); // State for age filter input
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(10); // Number of students per page
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,28 +54,6 @@ const StudentListPage: React.FC = () => {
 
     fetchData();
   }, []);
-
-  const handleViewDetails = (index: number) => {
-    setSelectedStudent(students[index]);
-    setIsDialogOpen(true);
-  };
-
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-    setSelectedStudent(null);
-  };
-
-  const handleGradeFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setGradeFilter(event.target.value as string);
-  };
-
-  const handleGenderFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setGenderFilter(event.target.value as string);
-  };
-
-  const handleAgeFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAgeFilter(event.target.value);
-  };
 
   // Function to calculate age from date of birth
   const calculateAge = (dob: string): number => {
@@ -105,6 +88,48 @@ const StudentListPage: React.FC = () => {
 
     return isGradeMatch && isGenderMatch && isAgeMatch;
   });
+
+  // Pagination logic
+  const totalStudents = filteredStudents.length;
+  const totalPages = Math.ceil(totalStudents / perPage);
+  const indexOfLastStudent = currentPage * perPage;
+  const indexOfFirstStudent = indexOfLastStudent - perPage;
+  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+
+  // Handlers for pagination
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handlePageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCurrentPage(event.target.value as number);
+  };
+
+  const handleGradeFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setGradeFilter(event.target.value as string);
+  };
+
+  const handleGenderFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setGenderFilter(event.target.value as string);
+  };
+
+  const handleAgeFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAgeFilter(event.target.value);
+  };
+
+  const handleViewDetails = (index: number) => {
+    setSelectedStudent(currentStudents[index]);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setSelectedStudent(null);
+  };
 
   return (
     <div>
@@ -165,7 +190,7 @@ const StudentListPage: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredStudents.map((student, index) => (
+            {currentStudents.map((student, index) => (
               <TableRow key={index}>
                 <TableCell>
                   <img
@@ -180,8 +205,8 @@ const StudentListPage: React.FC = () => {
                 <TableCell>{student.grade}</TableCell>
                 <TableCell>{`${student.parent.firstName} ${student.parent.middleName} ${student.parent.lastName}`}</TableCell>
                 <TableCell>
-                  <Button variant="contained" sx={{backgroundColor: "#000"}} onClick={() => handleViewDetails(index)}>
-                    <Typography sx={{fontWeight: 'bold', color: "#EB9E27"}}>View Details</Typography>
+                  <Button variant="contained" sx={{ backgroundColor: "#000" }} onClick={() => handleViewDetails(index)}>
+                    <Typography sx={{ fontWeight: 'bold', color: "#EB9E27" }}>View Details</Typography>
                   </Button>
                 </TableCell>
               </TableRow>
@@ -189,6 +214,27 @@ const StudentListPage: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Pagination Controls */}
+      <Box mt={2} display="flex" justifyContent="center">
+        <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Previous
+        </Button>
+        <Box mx={2}>
+          Page
+          <Select value={currentPage} onChange={handlePageChange}>
+            {Array.from(Array(totalPages), (x, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1}
+              </MenuItem>
+            ))}
+          </Select>
+          of {totalPages}
+        </Box>
+        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </Button>
+      </Box>
 
       {/* Student Details Dialog */}
       <Dialog open={isDialogOpen} onClose={handleCloseDialog} fullWidth maxWidth="xs" PaperProps={{ style: { padding: '20px' } }}>
@@ -225,8 +271,8 @@ const StudentListPage: React.FC = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} sx={{fontWeight: 'bold', backgroundColor: "#000"}}>
-            <Typography sx={{fontWeight: 'bold', color: "#EB9E27"}}>Close</Typography>
+          <Button onClick={handleCloseDialog} sx={{ fontWeight: 'bold', backgroundColor: "#000" }}>
+            <Typography sx={{ fontWeight: 'bold', color: "#EB9E27" }}>Close</Typography>
           </Button>
         </DialogActions>
       </Dialog>
