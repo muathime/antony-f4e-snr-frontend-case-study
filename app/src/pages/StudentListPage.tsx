@@ -53,22 +53,6 @@ const StudentListPage: React.FC = () => {
 
     fetchData();
   }, []);
-
-  // Function to calculate age from dob
-  const calculateAge = (dob: string): number => {
-    const dobDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - dobDate.getFullYear();
-    const monthDiff = today.getMonth() - dobDate.getMonth();
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < dobDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
-  };
-
   // Function to filter students based on set filters
   const filteredStudents = students.filter((student) => {
     let isGradeMatch = true;
@@ -361,6 +345,21 @@ const StudentListPage: React.FC = () => {
       </Dialog>
     </Box>
   );
+};
+
+//global function to calc age - I am using global to use same function for my testss
+const calculateAge = (dob: string): number => {
+  const dobDate = new Date(dob);
+  const today = new Date();
+  let age = today.getFullYear() - dobDate.getFullYear();
+  const monthDiff = today.getMonth() - dobDate.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < dobDate.getDate())
+  ) {
+    age--;
+  }
+  return age;
 };
 
 export default StudentListPage;
