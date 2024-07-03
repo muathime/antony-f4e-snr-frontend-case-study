@@ -61,5 +61,5 @@ antony-f4e-snr-frontend-case-study/
 For any questions or assistance, feel free to contact me at
 
 - Email: antony.m.munyao@gmail.com
-- LinkedIn: [Portfolio](https://antony-dev-portfolio.firebaseapp.com/)
+- Contact: [Portfolio](https://antony-dev-portfolio.firebaseapp.com/)
 - GitHub: [Github](https://github.com/muathime/)
