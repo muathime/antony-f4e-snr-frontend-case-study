@@ -32,11 +32,10 @@ const StudentListPage: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [gradeFilter, setGradeFilter] = useState<string>('');
   const [genderFilter, setGenderFilter] = useState<string>('');
-  const [ageFilter, setAgeFilter] = useState<string>(''); // State for age filter input
+  const [ageFilter, setAgeFilter] = useState<string>(''); 
 
-  // Pagination states
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(10); // Number of students per page
+  const [perPage, setPerPage] = useState<number>(10); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +54,7 @@ const StudentListPage: React.FC = () => {
     fetchData();
   }, []);
 
-  // Function to calculate age from date of birth
+  // Function to calculate age from dob
   const calculateAge = (dob: string): number => {
     const dobDate = new Date(dob);
     const today = new Date();
@@ -67,7 +66,7 @@ const StudentListPage: React.FC = () => {
     return age;
   };
 
-  // Function to filter students based on filters
+  // Function to filter students based on set filters
   const filteredStudents = students.filter((student) => {
     let isGradeMatch = true;
     let isGenderMatch = true;
@@ -143,9 +142,9 @@ const StudentListPage: React.FC = () => {
           fullWidth
         >
           <MenuItem value="">None</MenuItem>
-          <MenuItem value="A">Grade A</MenuItem>
-          <MenuItem value="B">Grade B</MenuItem>
-          <MenuItem value="C">Grade C</MenuItem>
+          <MenuItem value="CLASS 1">Grade 1</MenuItem>
+          <MenuItem value="CLASS 2">Grade 2</MenuItem>
+          <MenuItem value="CLASS 3">Grade 3</MenuItem>
         </Select>
       </FormControl>
       <FormControl variant="outlined" style={{ minWidth: 200, marginBottom: 10, marginLeft: 5 }}>
