@@ -20,7 +20,7 @@ The objective of this project is to develop a student listing page using Next.js
 # Getting Started
 To get started with this project, follow these steps:
 
-1. Clone the repository - i.e. git clone <>
+1. Clone the repository - i.e. git clone https://github.com/muathime/antony-f4e-snr-frontend-case-study.git
 2. cd student-listing
 3. Install dependencies:
  `npm install`
@@ -30,9 +30,30 @@ To get started with this project, follow these steps:
 
 Open http://localhost:3000 in your browser to view the application.
 
+# Running tests
+Run tests using Jest
+`npm test`
+
 # Folder Structure
-student-listing/
-├── components/
-├── public/
-├── styles/
-└── README.md
+antony-f4e-snr-frontend-case-study/
+│
+├── src/              
+│   ├── api/          # API calls
+│   ├── pages/        # Next.js pages
+│   ├── components/   # Reusable Custom App components
+│   └── types         # mock data interface
+│
+├── public/           # Static assets
+│
+├── __tests__/         # Test files
+│   
+├── jest.config.js    # Jest configuration
+├── tsconfig.json     # TypeScript configuration
+└── package.json      # Project dependencies and scripts
+
+## Contacts
+
+For any questions or assistance, feel free to contact me at
+- Email: antony.m.munyao@gmail.com
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/antony-munyao/)
+- GitHub: [Github](https://github.com/muathime/)
