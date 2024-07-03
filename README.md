@@ -39,7 +39,7 @@ Run tests using Jest
 `npm test`
 
 # Folder Structure
-
+```
 antony-f4e-snr-frontend-case-study/
 │
 ├── src/  
@@ -55,11 +55,11 @@ antony-f4e-snr-frontend-case-study/
 ├── jest.config.js # Jest configuration
 ├── tsconfig.json # TypeScript configuration
 └── package.json # Project dependencies and scripts
-
+```
 ## Contacts
 
 For any questions or assistance, feel free to contact me at
 
 - Email: antony.m.munyao@gmail.com
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/antonymunyao/)
+- LinkedIn: [Portfolio](https://antony-dev-portfolio.firebaseapp.com/)
 - GitHub: [Github](https://github.com/muathime/)
