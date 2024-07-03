@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -22,32 +22,32 @@ import {
   Box,
   Grid,
   TextField,
-} from '@mui/material';
-import { Student } from '../types/students';
-import api from '../api/api';
+} from "@mui/material";
+import { Student } from "../types/students";
+import api from "../api/api";
 
 const StudentListPage: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [gradeFilter, setGradeFilter] = useState<string>('');
-  const [genderFilter, setGenderFilter] = useState<string>('');
-  const [ageFilter, setAgeFilter] = useState<string>(''); 
+  const [gradeFilter, setGradeFilter] = useState<string>("");
+  const [genderFilter, setGenderFilter] = useState<string>("");
+  const [ageFilter, setAgeFilter] = useState<string>("");
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(10); 
+  const [perPage, setPerPage] = useState<number>(10);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.fetchStudents();
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         const data: Student[] = await response.json();
         setStudents(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -60,7 +60,10 @@ const StudentListPage: React.FC = () => {
     const today = new Date();
     let age = today.getFullYear() - dobDate.getFullYear();
     const monthDiff = today.getMonth() - dobDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < dobDate.getDate())
+    ) {
       age--;
     }
     return age;
@@ -78,7 +81,7 @@ const StudentListPage: React.FC = () => {
     if (genderFilter && student.gender !== genderFilter) {
       isGenderMatch = false;
     }
-    if (ageFilter !== '') {
+    if (ageFilter !== "") {
       const studentAge = calculateAge(student.dateOfBirth);
       if (studentAge.toString() !== ageFilter) {
         isAgeMatch = false;
@@ -93,7 +96,10 @@ const StudentListPage: React.FC = () => {
   const totalPages = Math.ceil(totalStudents / perPage);
   const indexOfLastStudent = currentPage * perPage;
   const indexOfFirstStudent = indexOfLastStudent - perPage;
-  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = filteredStudents.slice(
+    indexOfFirstStudent,
+    indexOfLastStudent
+  );
 
   // Handlers for pagination
   const handleNextPage = () => {
@@ -108,15 +114,21 @@ const StudentListPage: React.FC = () => {
     setCurrentPage(event.target.value as number);
   };
 
-  const handleGradeFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleGradeFilterChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
     setGradeFilter(event.target.value as string);
   };
 
-  const handleGenderFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleGenderFilterChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
     setGenderFilter(event.target.value as string);
   };
 
-  const handleAgeFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAgeFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAgeFilter(event.target.value);
   };
 
@@ -131,8 +143,11 @@ const StudentListPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <FormControl variant="outlined" style={{ minWidth: 200, marginBottom: 10 }}>
+    <Box sx={{ m: 2 }}>
+      <FormControl
+        variant="outlined"
+        style={{ minWidth: 200, marginBottom: 10 }}
+      >
         <InputLabel id="grade-filter-label">Filter by Grade</InputLabel>
         <Select
           labelId="grade-filter-label"
@@ -147,7 +162,10 @@ const StudentListPage: React.FC = () => {
           <MenuItem value="CLASS 3">Grade 3</MenuItem>
         </Select>
       </FormControl>
-      <FormControl variant="outlined" style={{ minWidth: 200, marginBottom: 10, marginLeft: 5 }}>
+      <FormControl
+        variant="outlined"
+        style={{ minWidth: 200, marginBottom: 10, marginLeft: 5 }}
+      >
         <InputLabel id="gender-filter-label">Filter by Gender</InputLabel>
         <Select
           labelId="gender-filter-label"
@@ -161,7 +179,10 @@ const StudentListPage: React.FC = () => {
           <MenuItem value="Female">Female</MenuItem>
         </Select>
       </FormControl>
-      <FormControl variant="outlined" style={{ minWidth: 200, marginBottom: 10, marginLeft: 5 }}>
+      <FormControl
+        variant="outlined"
+        style={{ minWidth: 200, marginBottom: 10, marginLeft: 5 }}
+      >
         <TextField
           type="number"
           label="Filter by Age"
@@ -179,13 +200,41 @@ const StudentListPage: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Image</Typography> </TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Name</Typography></TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Date of Birth</Typography></TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Gender</Typography></TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Grade</Typography></TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Parent</Typography></TableCell>
-              <TableCell><Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Actions</Typography></TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Image
+                </Typography>{" "}
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Name
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Date of Birth
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Gender
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Grade
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Parent
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Actions
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -195,7 +244,7 @@ const StudentListPage: React.FC = () => {
                   <img
                     src={student.image}
                     alt={`${student.firstName} ${student.lastName}`}
-                    style={{ width: 50, height: 50, borderRadius: '50%' }}
+                    style={{ width: 50, height: 50, borderRadius: "50%" }}
                   />
                 </TableCell>
                 <TableCell>{`${student.firstName} ${student.middleName} ${student.lastName}`}</TableCell>
@@ -204,8 +253,19 @@ const StudentListPage: React.FC = () => {
                 <TableCell>{student.grade}</TableCell>
                 <TableCell>{`${student.parent.firstName} ${student.parent.middleName} ${student.parent.lastName}`}</TableCell>
                 <TableCell>
-                  <Button variant="contained" sx={{ backgroundColor: "#000" }} onClick={() => handleViewDetails(index)}>
-                    <Typography sx={{ fontWeight: 'bold', color: "#EB9E27" }}>View Details</Typography>
+                  <Button
+                    variant="text"
+                    sx={{ backgroundColor: "#000" }}
+                    onClick={() => handleViewDetails(index)}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#ff6900",
+                        textTransform: "none",
+                      }}
+                    >
+                      View details
+                    </Typography>
                   </Button>
                 </TableCell>
               </TableRow>
@@ -217,36 +277,49 @@ const StudentListPage: React.FC = () => {
       {/* Pagination Controls */}
       <Box mt={2} display="flex" justifyContent="center">
         <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-          Previous
+          <Typography sx={{ fontSize: 10 }}>Previous</Typography>
         </Button>
-        <Box mx={2}>
-          Page
-          <Select value={currentPage} onChange={handlePageChange}>
+        <Box mx={1}>
+          <Select
+            value={currentPage}
+            onChange={handlePageChange}
+            sx={{ marginLeft: 1, marginRight: 1 }}
+          >
             {Array.from(Array(totalPages), (x, index) => (
               <MenuItem key={index} value={index + 1}>
                 {index + 1}
               </MenuItem>
             ))}
           </Select>
-          of {totalPages}
         </Box>
         <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
+          <Typography sx={{ fontSize: 10 }}>Next</Typography>
         </Button>
       </Box>
 
       {/* Student Details Dialog */}
-      <Dialog open={isDialogOpen} onClose={handleCloseDialog} fullWidth maxWidth="xs" PaperProps={{ style: { padding: '20px' } }}>
+      <Dialog
+        open={isDialogOpen}
+        onClose={handleCloseDialog}
+        fullWidth
+        maxWidth="xs"
+        PaperProps={{ style: { padding: "20px" } }}
+      >
         <DialogTitle>Student Details</DialogTitle>
         <DialogContent>
           {selectedStudent && (
             <Grid container spacing={4}>
               <Grid item>
-                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height="100%"
+                >
                   <img
                     src={selectedStudent.image}
                     alt={`${selectedStudent.firstName} ${selectedStudent.lastName}`}
-                    style={{ width: 100, height: 100, borderRadius: '50%' }}
+                    style={{ width: 100, height: 100, borderRadius: "50%" }}
                   />
                 </Box>
               </Grid>
@@ -262,7 +335,7 @@ const StudentListPage: React.FC = () => {
                   <strong>Grade:</strong> {selectedStudent.grade}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Parent:</strong>{' '}
+                  <strong>Parent:</strong>{" "}
                   {`${selectedStudent.parent.firstName} ${selectedStudent.parent.middleName} ${selectedStudent.parent.lastName}`}
                 </Typography>
               </Grid>
@@ -270,12 +343,23 @@ const StudentListPage: React.FC = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} sx={{ fontWeight: 'bold', backgroundColor: "#000" }}>
-            <Typography sx={{ fontWeight: 'bold', color: "#EB9E27" }}>Close</Typography>
+          <Button
+            onClick={handleCloseDialog}
+            sx={{ fontWeight: "bold", backgroundColor: "#000" }}
+          >
+            <Typography
+              sx={{
+                // fontWeight: "bold",
+                color: "#ff6900",
+                textTransform: "none",
+              }}
+            >
+              Close
+            </Typography>
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 
